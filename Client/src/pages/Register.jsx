@@ -1,45 +1,54 @@
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-Link
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { loginStart, loginFinish, loginError } from '../store'
 
 const Register = () => {
 
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
-    const [username, setUsername] = useState()
-    const [email, setEmail] = useState()
-    const [mobile, setMobile] = useState()
-    const [password, setPassword] = useState()
+    const [username, setUsername] = useState("")
+    const [email, setEmail] = useState("")
+    const [mobile, setMobile] = useState(0)
+    const [password, setPassword] = useState("")
 
-    const [error, setError] = useState(false)
+    const { loading, user, error } = useSelector((state) => {
+        console.log("register state", state)
+        return state.user
+    })
     
 
     const handleSubmit = async(e) => {
         e.preventDefault()
-        const response = await fetch("http://localhost:3000/api/user/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                username, email, mobile, password
+        try {
+            dispatch(loginStart())
+            const response = await fetch("http://localhost:3000/api/user/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username, email, mobile, password
+                })
             })
-        })
-
-        console.log("response", response)
-
-        const data = await response.json()
-        console.log("data", data)
-        if(response.ok) {
-            setError(false)
-            navigate("/")
-            console.log("succes")
+            const data = await response.json()
+            console.log("data", data)
+            if(response.ok) {
+                dispatch(loginFinish(data))
+                navigate("/")
+                console.log("succes")
+            }
+            else {
+                dispatch(loginError(data.error))
+                console.log("failed")
+            }
+            
+        } catch (error) {
+            dispatch(loginError(error.message))
         }
-        else {
-            setError(data.error)
-            console.log("failed")
-        }
+
     }
 
   return (

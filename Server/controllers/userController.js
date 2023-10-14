@@ -50,7 +50,6 @@ const login = async (req, res) => {
     const user = await userModel.loginStatics(email, password);
     const token = createJsonWebToken(user._id);
     const { password: hashedPassword, ...rest } = user;
-    res.status(200).json(user);
     return res
       .cookie("token", token, { httpOnly: true })
       .status(200)
