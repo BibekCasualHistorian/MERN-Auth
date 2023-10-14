@@ -40,9 +40,17 @@ userSchema.statics.registerStatics = async function (
     throw Error("Please fill in all fields");
   }
 
-  const isAlready = await this.findOne({ email });
-  if (isAlready) {
+  const isEmail = await this.findOne({ email });
+  if (isEmail) {
     throw Error("You already have registered. Please login to continue");
+  }
+  const isUsername = await this.findOne({ username });
+  if (isUsername) {
+    throw Error("You must have unique Username");
+  }
+  const isMobile = await this.findOne({ mobile });
+  if (isMobile) {
+    throw Error("Your mobile number should be unique");
   }
 
   if (!validator.isEmail(email)) {
@@ -79,16 +87,32 @@ userSchema.statics.registerStatics = async function (
     password: hash,
     mobile,
   });
+
   return user;
 };
 
 userSchema.statics.loginStatics = async function (email, password) {
   if (!email || !password) {
-    throw Error("Please enter all credentials");
+    throw new Error("Please enter all credentials");
   }
+
   if (!validator.isEmail(email)) {
-    throw Error("Invalid email address");
+    throw new Error("Invalid email address");
   }
+
+  const user = await this.findOne({ email });
+
+  if (!user) {
+    throw new Error("You haven't registered yet");
+  }
+
+  const passwordMatch = await bcrypt.compare(password, user.password);
+
+  if (!passwordMatch) {
+    throw new Error("Password doesn't match");
+  }
+
+  return user;
 };
 
 //Export the model

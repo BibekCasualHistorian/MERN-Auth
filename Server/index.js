@@ -10,9 +10,11 @@ const userRoutes = require("./routes/userRoutes");
 const express = require("express");
 const app = express();
 const PORT = 3000;
+const cors = require("cors");
 
 // middleware
 app.use(express.json());
+app.use(cors());
 
 // App Routes
 app.use("/api/user", userRoutes);
