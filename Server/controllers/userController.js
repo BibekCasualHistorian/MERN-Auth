@@ -23,14 +23,15 @@ const register = async (req, res) => {
     const token = createJsonWebToken(user._id);
 
     // We don't want to send the password to user so
-    const { password, ...rest } = user;
+    const { password: hashedPassword, ...rest } = user._doc;
 
     // adding expiry date for token, we need to sign in every time we request for anything
     // api, so we use expires feautres to use that same token for certain time
     const expirayDate = new Date(Date.now() + 360000); // for 1 hour
+    // return res.status(200).json(user);
     res
       .cookie("token", token, {
-        httpOnly: true, // client won't be accesss the sent cookie
+        // httpOnly: true, // client won't be accesss the sent cookie
         // when does it expires, it denotes that, alternate property is maxAge
         expires:
           expirayDate /* there are other too like signed, secure, overwrite etc*/,
@@ -48,7 +49,8 @@ const login = async (req, res) => {
   try {
     const user = await userModel.loginStatics(email, password);
     const token = createJsonWebToken(user._id);
-    const { password, ...rest } = user;
+    const { password: hashedPassword, ...rest } = user;
+    res.status(200).json(user);
     return res
       .cookie("token", token, { httpOnly: true })
       .status(200)

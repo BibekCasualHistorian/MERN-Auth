@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import Navbar from '../components/Navbar'
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 Link
 
 const Register = () => {
+
+    const navigate = useNavigate()
 
     const [username, setUsername] = useState()
     const [email, setEmail] = useState()
@@ -31,6 +33,7 @@ const Register = () => {
         console.log("data", data)
         if(response.ok) {
             setError(false)
+            navigate("/")
             console.log("succes")
         }
         else {

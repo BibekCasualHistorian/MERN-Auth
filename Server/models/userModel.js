@@ -78,6 +78,8 @@ userSchema.statics.registerStatics = async function (
     throw Error("Weak Password");
   }
 
+  console.log("here");
+
   const salt = await bcrypt.genSalt(10);
   const hash = await bcrypt.hash(password, salt);
 
