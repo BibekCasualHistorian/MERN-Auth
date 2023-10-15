@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginError, loginFinish, loginStart } from '../store';
+import OAuth from '../components/OAuth';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -85,6 +86,7 @@ const Login = () => {
           </h2>
           <input type='submit' value='Login' className='form-submit' />
         </form>
+        <OAuth />
         <p>Don't have a account? <Link to='/register'>Register</Link></p>
       </div>
     </>

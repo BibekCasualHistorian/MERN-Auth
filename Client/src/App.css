@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap');
+
 a {
     color: black;
 }
@@ -7,24 +9,34 @@ a:hover {
 }
 
 header {
+    border: 1px solid red;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.8em 2em;
+    padding: 1.3em 2em;
 }
 
-header a {
-    font-size: 1.8em;
+header > a {
+    font-size: 2.8em;
 }
 
 ul {
     list-style: none;
     display: flex;
-    gap: 1em;
+    align-items: center;
+    gap: 4vw;
 }
 
 ul li a {
-    font-size: 1em;
+    font-size: 1.5em;
+}
+
+ul li a img {
+    object-fit: cover;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    margin-left: 0.5em;
 }
 
 .form-register {
@@ -75,3 +87,51 @@ form input:focus {
     margin-left: 1em;
     color: rgb(80, 80, 110);
 }
+
+/* Profile  */
+.profile {
+    max-width: 500px;
+    border: 1px solid grey;
+    border-radius: 2em;
+
+    margin: 1em auto;
+    text-align: center;
+}
+
+.profile > * {
+    margin-block: 0.7em;
+}
+
+.profile img {
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profile > button {
+    cursor: pointer;
+    width: 60%;
+    padding: 0.7em;
+    border: none;
+    border-radius: 20px;
+    background: red;
+    color: white;
+}
+
+.profile > div {
+    margin-top: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.profile > div button {
+    cursor: pointer;
+    color: red;
+    font: 0.9em;
+    border: none;
+    background: none;
+    
+}
+

@@ -3,6 +3,7 @@ import Navbar from '../components/Navbar'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginStart, loginFinish, loginError } from '../store'
+import OAuth from '../components/OAuth'
 
 const Register = () => {
 
@@ -68,6 +69,7 @@ const Register = () => {
             <h2>{error ? <p style={{color: "red", fontSize: "1.2rem"}}>{error}</p> : "" }</h2>
             <input type="submit" value="Register" className='form-submit' />
         </form>
+        <OAuth />
         <p>Have a account <Link to="/login">Login</Link></p>
     </div>
     </>

@@ -1,11 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { userReducer } from './slices/userSlice';
-import { loginError, loginFinish, loginStart } from './slices/userSlice'
+import { loginError, loginFinish, loginStart } from './slices/userSlice';
+import { persistReducer, persistStore } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
-const store = configureStore({
-  reducer: {
-    user: userReducer
-  },
+const rootReducers = combineReducers({
+  user: userReducer,
 });
 
-export {store, loginStart, loginFinish, loginError}
+const persistConfig = {
+  key: 'root',
+  version: 1,
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducers);
+
+// Create the store with Redux DevTools Extension
+export const store = configureStore({
+  reducer: persistedReducer,
+});
+
+export const persistor = persistStore(store);
+
+export { loginStart, loginFinish, loginError };
