@@ -32,7 +32,8 @@ const Register = () => {
                 },
                 body: JSON.stringify({
                     username, email, mobile, password
-                })
+                }),
+                credentials: "include",
             })
             const data = await response.json()
             console.log("data", data)
@@ -55,15 +56,15 @@ const Register = () => {
   return (
     <>
     <Navbar />
-    <div className='form-register'>
+    <div className='register'>
         Register: 
-        <form onSubmit={handleSubmit}>
+        <form className='form-register' onSubmit={handleSubmit}>
             <label htmlFor="username">Username: </label> <br />
             <input type="text" id='username' name='username' autoComplete='no' required value={username} onChange={(e) => setUsername(e.target.value)} />
             <label htmlFor="email">Email: </label> <br />
             <input type="email" id='email' name='email' autoComplete='no' required value={email} onChange={(e) => setEmail(e.target.value)} />
             <label htmlFor="mobile">Mobile: </label> <br />
-            <input type="text" id='mobile' name='mobile' autoComplete='no' required value={mobile} onChange={(e) => setMobile(e.target.value)} />
+            <input type="text" id='mobile' name='mobile' autoComplete='no' value={mobile} onChange={(e) => setMobile(e.target.value)} />
             <label htmlFor="password">Password: </label> <br />
             <input type="text" id='password' name='password' autoComplete='no' required value={password} onChange={(e) => setPassword(e.target.value)} />
             <h2>{error ? <p style={{color: "red", fontSize: "1.2rem"}}>{error}</p> : "" }</h2>

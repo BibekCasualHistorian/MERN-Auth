@@ -17,7 +17,6 @@ var userSchema = new mongoose.Schema(
     mobile: {
       type: String,
       required: true,
-      unique: [true, "Your mobile phone is already used"],
     },
     password: {
       type: String,

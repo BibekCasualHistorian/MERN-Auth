@@ -2,9 +2,12 @@ import React from 'react'
 import {GoogleAuthProvider, getAuth, signInWithPopup} from 'firebase/auth'
 import { app } from '../firebase/firebase.jsx'
 import { useDispatch } from 'react-redux'
-import localStorage from 'redux-persist/es/storage'
+import { loginFinish } from '../store/index.jsx'
+import { useNavigate } from 'react-router-dom'
 
 const OAuth = () => {
+
+    const navigate = useNavigate()
 
     const dispatch = useDispatch()
 
@@ -28,14 +31,16 @@ const OAuth = () => {
                     name: result.user.displayName,
                     email: result.user.email,
                     photo: result.user.photoURL
-                })
+                }),
+                credentials: "include",
             })
 
             const data = await response.json()
             console.log("data", data)
 
             if(response.ok) {
-                dispatch(localStorage(data))
+                dispatch(loginFinish(data))
+                navigate("/")
                 console.log("sign in through GoogleAuth", data)
             }
 

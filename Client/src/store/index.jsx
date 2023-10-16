@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { userReducer } from './slices/userSlice';
-import { loginError, loginFinish, loginStart } from './slices/userSlice';
+import { loginError, loginFinish, loginStart, updateError,updateSucess } from './slices/userSlice';
 import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
@@ -23,4 +23,4 @@ export const store = configureStore({
 
 export const persistor = persistStore(store);
 
-export { loginStart, loginFinish, loginError };
+export { loginStart, loginFinish, loginError, updateSucess, updateError };

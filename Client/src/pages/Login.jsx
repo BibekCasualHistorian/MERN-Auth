@@ -13,7 +13,6 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const {loading, error} = useSelector((state) => {
-    console.log("states collection", state)
     return state.user
   })
 
@@ -21,11 +20,13 @@ const Login = () => {
     e.preventDefault();
     try {
         dispatch(loginStart())
+        console.log("above fetch", JSON.stringify({email,password}))
         const response = await fetch('http://localhost:3000/api/user/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
+            credentials: "include",
             body: JSON.stringify({
               email,
               password,
@@ -39,7 +40,7 @@ const Login = () => {
               
           if (response.ok) {
             dispatch(loginFinish(data))
-            navigate('/');
+            navigate('/profile');
             console.log('succes');
         } else {
             dispatch(loginError(data.error))
@@ -56,9 +57,9 @@ const Login = () => {
   return (
     <>
       <Navbar />
-      <div className='form-register'>
+      <div className='login'>
         Login:
-        <form onSubmit={handleSubmit}>
+        <form className='form-login' onSubmit={handleSubmit}>
           <label htmlFor='email'>Email: </label>
           <br />
           <input
